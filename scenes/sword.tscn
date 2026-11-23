@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/sword.gd" id="1_sword"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_blade"]
+albedo_color = Color(0.82, 0.86, 0.92, 1)
+metallic = 0.85
+roughness = 0.25
+emission_enabled = true
+emission = Color(0.35, 0.8, 1, 1)
+emission_energy_multiplier = 0.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_handle"]
+albedo_color = Color(0.25, 0.15, 0.1, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_gold"]
+albedo_color = Color(0.85, 0.65, 0.25, 1)
+metallic = 0.9
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="Mesh_blade"]
+material = SubResource("Mat_blade")
+size = Vector3(0.05, 0.012, 0.8)
+
+[sub_resource type="PrismMesh" id="Mesh_tip"]
+material = SubResource("Mat_blade")
+size = Vector3(0.05, 0.1, 0.012)
+
+[sub_resource type="CylinderMesh" id="Mesh_handle"]
+material = SubResource("Mat_handle")
+top_radius = 0.018
+bottom_radius = 0.018
+height = 0.2
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="Mesh_guard"]
+material = SubResource("Mat_gold")
+size = Vector3(0.2, 0.025, 0.03)
+
+[sub_resource type="SphereMesh" id="Mesh_pommel"]
+material = SubResource("Mat_gold")
+radius = 0.028
+height = 0.056
+radial_segments = 12
+rings = 6
+
+[sub_resource type="BoxShape3D" id="Shape_blade"]
+size = Vector3(0.08, 0.06, 0.92)
+
+[node name="Sword" type="Node3D"]
+script = ExtResource("1_sword")
+
+[node name="Handle" type="MeshInstance3D" parent="."]
+rotation_degrees = Vector3(-90, 0, 0)
+mesh = SubResource("Mesh_handle")
+
+[node name="Pommel" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, 0.11)
+mesh = SubResource("Mesh_pommel")
+
+[node name="Guard" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, -0.11)
+mesh = SubResource("Mesh_guard")
+
+[node name="Blade" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, -0.52)
+mesh = SubResource("Mesh_blade")
+
+[node name="Tip" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, -0.97)
+rotation_degrees = Vector3(-90, 0, 0)
+mesh = SubResource("Mesh_tip")
+
+[node name="SweetSpot" type="Marker3D" parent="."]
+position = Vector3(0, 0, -0.7)
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+position = Vector3(0, 0, -0.56)
+shape = SubResource("Shape_blade")

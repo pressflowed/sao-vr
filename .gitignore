@@ -1,0 +1,7 @@
+# Godot cache / generated files
+.godot/
+/android/
+*.apk
+*.aab
+export_credentials.cfg
+.DS_Store
